@@ -17,6 +17,12 @@ final StorageReference storageRef = FirebaseStorage.instance.ref();
 
 final userref = Firestore.instance.collection('users');
 final postsRef = Firestore.instance.collection('posts');
+final commentsRef=Firestore.instance.collection('comments');
+final activityFeedRef=Firestore.instance.collection('feed');
+final followersRef = Firestore.instance.collection('followers');
+final followingRef = Firestore.instance.collection('following');
+final timelineRef = Firestore.instance.collection('timeline');
+
 final DateTime timestamp = DateTime.now();
 User currentuser;
 
@@ -41,9 +47,9 @@ class _HomeState extends State<Home> {
     });
   }
 
-  handelsignin(GoogleSignInAccount account) {
+  handelsignin(GoogleSignInAccount account)async {
     if (account != null) {
-      createuserinstore();
+     await createuserinstore();
       print('yesss $account');
 
       setState(() {
@@ -73,6 +79,12 @@ class _HomeState extends State<Home> {
         "bio": "",
         "timestamp": timestamp
       });
+      // make new user their own follower (to include their posts in their timeline)
+      await followersRef
+          .document(user.id)
+          .collection('userFollowers')
+          .document(user.id)
+          .setData({});
       doc = await userref.document(user.id).get();
     }
     currentuser = User.fromDocument(doc);
@@ -109,11 +121,11 @@ class _HomeState extends State<Home> {
     return Scaffold(
       body: PageView(
         children: <Widget>[
-          Timeline(),
+          Timeline(currentuser:currentuser),
           ActivityFeed(),
           Upload(currentUser: currentuser),
           Search(),
-          Profile(),
+          Profile(profileId:currentuser?.id),
         ],
         controller: pageController,
         onPageChanged: onPageChanged,
@@ -169,10 +181,10 @@ class _HomeState extends State<Home> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Text(
-              'FlutterShare',
+              'KUET-Album',
               style: TextStyle(
                 fontFamily: "Signatra",
-                fontSize: 90.0,
+                fontSize: 60.0,
                 color: Colors.white,
               ),
             ),

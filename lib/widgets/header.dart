@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 AppBar header(context, {bool isAppTitle = false, String titleText}) {
@@ -9,6 +10,7 @@ AppBar header(context, {bool isAppTitle = false, String titleText}) {
         fontFamily: isAppTitle ? "Signatra" : "",
         fontSize: isAppTitle ? 50.0 : 22.0,
       ),
+      overflow: TextOverflow.ellipsis,
     ),
     centerTitle: true,
     backgroundColor: Theme.of(context).accentColor,
