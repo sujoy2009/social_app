@@ -344,7 +344,8 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       appBar: header(context, titleText: "Profile"),
       body: ListView(
-        children: <Widget>[buildProfileHeader(),
+        children: <Widget>[
+          buildProfileHeader(),
           Divider(
             height: 0.0,
           ),

@@ -192,7 +192,7 @@ class _UploadState extends State<Upload>
         children: <Widget>[
           isUploading ? linearProgress() : Text(""),
           Container(
-            height: 220.0,
+            height: 320.0,
             width: MediaQuery.of(context).size.width * 0.8,
             child: Center(
               child: AspectRatio(

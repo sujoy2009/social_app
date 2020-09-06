@@ -135,6 +135,7 @@ class UserResult extends StatelessWidget {
           GestureDetector(
             onTap: ()=>showProfile(context, profileId: user.id),
             child:ListTile(
+
               leading: CircleAvatar(
                 backgroundColor: Colors.grey,
                 backgroundImage: CachedNetworkImageProvider(user.photoUrl),

@@ -36,6 +36,6 @@ class PostScreen extends StatelessWidget {
           ),
         );
       },
-    );;
+    );
   }
 }

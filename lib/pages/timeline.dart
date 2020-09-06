@@ -125,6 +125,8 @@ class _TimelineState extends State<Timeline> {
     return Scaffold(
         appBar: header(context, isAppTitle: true),
         body: RefreshIndicator(
-            onRefresh: () => getTimeline(), child: buildTimeline()));
+            onRefresh: () => getTimeline(), child: buildTimeline()
+        ));
+
   }
 }

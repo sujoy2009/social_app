@@ -45,6 +45,12 @@ class _HomeState extends State<Home> {
     }, onError: (err) {
       print('eroor $err');
     });
+    // Reauthenticate user when app is opened
+    googlesignin.signInSilently(suppressErrors: false).then((account) {
+      handelsignin(account);
+    }).catchError((err) {
+      print('Error signing in: $err');
+    });
   }
 
   handelsignin(GoogleSignInAccount account)async {
@@ -64,6 +70,7 @@ class _HomeState extends State<Home> {
 
   createuserinstore() async {
     final GoogleSignInAccount user = googlesignin.currentUser;
+
     DocumentSnapshot doc = await userref.document(user.id).get();
 
     if (!doc.exists) {
@@ -79,12 +86,13 @@ class _HomeState extends State<Home> {
         "bio": "",
         "timestamp": timestamp
       });
-      // make new user their own follower (to include their posts in their timeline)
+      // make new user their own follower (to include their own posts in their timeline)
       await followersRef
           .document(user.id)
           .collection('userFollowers')
           .document(user.id)
           .setData({});
+      //update doc to current user document
       doc = await userref.document(user.id).get();
     }
     currentuser = User.fromDocument(doc);
@@ -129,7 +137,7 @@ class _HomeState extends State<Home> {
         ],
         controller: pageController,
         onPageChanged: onPageChanged,
-        physics: NeverScrollableScrollPhysics(),
+      //  physics: NeverScrollableScrollPhysics(),
       ),
       bottomNavigationBar: CupertinoTabBar(
           currentIndex: pageIndex,
@@ -138,21 +146,52 @@ class _HomeState extends State<Home> {
           items: [
             BottomNavigationBarItem(
               icon: Icon(Icons.whatshot),
+              title: Text('timeline',style: TextStyle(
+                color:Theme.of(context).primaryColor ,
+                fontWeight: FontWeight.bold,
+                fontSize: 15,
+              ),),
+
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.notifications_active),
+              title: Text('Notification',style: TextStyle(
+                color:Theme.of(context).primaryColor ,
+                fontWeight: FontWeight.bold,
+                fontSize: 15,
+              ),),
+
             ),
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.photo_camera,
                 size: 35.0,
               ),
+              title: Text('post',style: TextStyle(
+                color:Theme.of(context).primaryColor ,
+                fontWeight: FontWeight.bold,
+                fontSize: 15,
+              ),),
+
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.search),
+              title: Text('search',style: TextStyle(
+                color:Theme.of(context).primaryColor ,
+                fontWeight: FontWeight.bold,
+                fontSize: 15,
+              ),),
+
             ),
+
             BottomNavigationBarItem(
               icon: Icon(Icons.account_circle),
+              title: Text('account',style: TextStyle(
+                color:Theme.of(context).primaryColor ,
+                fontWeight: FontWeight.bold,
+                fontSize: 15,
+              ),),
+
             ),
           ]),
     );
