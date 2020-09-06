@@ -155,10 +155,10 @@ class _HomeState extends State<Home> {
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.notifications_active),
-              title: Text('Notification',style: TextStyle(
+              title: Text('Activity',style: TextStyle(
                 color:Theme.of(context).primaryColor ,
-                fontWeight: FontWeight.bold,
-                fontSize: 15,
+
+                fontSize: 10,
               ),),
 
             ),
