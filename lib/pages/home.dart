@@ -157,6 +157,7 @@ class _HomeState extends State<Home> {
               icon: Icon(Icons.notifications_active),
               title: Text('Activity',style: TextStyle(
                 color:Theme.of(context).primaryColor ,
+                fontWeight: FontWeight.bold,
 
                 fontSize: 10,
               ),),
